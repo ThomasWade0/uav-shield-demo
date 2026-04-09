@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>烟幕干扰弹最优投放策略系统</title>
+<!-- 引入 CSS -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  
+<!-- 登录弹窗 -->
+<div id="loginModal" class="modal">
+  <div class="login-box">
+    <div class="login-title">用户登录</div>
+    <div class="tab">
+      <button class="tab-btn active" onclick="switchTab('login')">登录</button>
+      <button class="tab-btn" onclick="switchTab('reg')">注册</button>
+    </div>
+
+    <div id="loginForm">
+      <div class="form-item">
+        <input type="text" id="login_user" placeholder="用户名">
+      </div>
+      <div class="form-item">
+        <input type="password" id="login_pwd" placeholder="密码">
+      </div>
+      <button onclick="userLogin()">登录</button>
+      <div class="msg" id="login_msg"></div>
+    </div>
+
+    <div id="regForm" style="display:none">
+      <div class="form-item">
+        <input type="text" id="reg_user" placeholder="设置用户名">
+      </div>
+      <div class="form-item">
+        <input type="password" id="reg_pwd" placeholder="设置密码">
+      </div>
+      <button onclick="userReg()">注册</button>
+      <div class="msg" id="reg_msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 主系统 -->
+<div class="container" id="mainContainer" style="display:none">
+  <div class="user-bar">
+    <span>欢迎：<span id="show_username"></span></span>
+    <button class="logout-btn" onclick="logout()">退出登录</button>
+  </div>
+
+ <!-- 新的标题区域：Logo + 单行标题 -->
+<div class="header">
+  <img src="logo.png" alt="穹盾Logo" class="logo">
+  <div class="title">"穹盾"无人机烟幕协同遮蔽决策系统</div>
+</div>
+
+  <div class="item">
+    <label>导弹速度 (m/s)</label>
+    <input type="number" id="v_missile" value="300">
+  </div>
+
+  <div class="sect">无人机初始坐标</div>
+  <div class="grid">
+    <div><label>X</label><input type="number" id="d_x"></div>
+    <div><label>Y</label><input type="number" id="d_y"></div>
+    <div><label>Z</label><input type="number" id="d_z"></div>
+  </div>
+
+  <div class="sect">导弹初始坐标</div>
+  <div class="grid">
+    <div><label>X</label><input type="number" id="m_x"></div>
+    <div><label>Y</label><input type="number" id="m_y"></div>
+    <div><label>Z</label><input type="number" id="m_z"></div>
+  </div>
+
+  <div class="sect">真目标坐标</div>
+  <div class="grid">
+    <div><label>X</label><input type="number" id="t_x" value="0"></div>
+    <div><label>Y</label><input type="number" id="t_y" value="200"></div>
+    <div><label>Z</label><input type="number" id="t_z" value="0"></div>
+  </div>
+
+  <button onclick="generateStrategy()">生成最优投放策略</button>
+
+  <div class="result" id="result" style="display:none">
+    <div class="result-header">
+      <div class="result-title">✈️ 无人机投放策略报告</div>
+      <div class="result-subtitle">基于三维运动学模型与遮蔽效能优化</div>
+    </div>
+    
+    <div class="param-group">
+      <div class="line">
+        <span class="label">飞行方向</span>
+        <span class="value" id="angle">0.00</span>°
+      </div>
+      <div class="line">
+        <span class="label">飞行速度</span>
+        <span class="value" id="speed">0.00</span>m/s
+      </div>
+      <div class="line">
+        <span class="label">投放时间</span>
+        <span class="value" id="t1">0.00</span>s
+      </div>
+      <div class="line">
+        <span class="label">起爆延时</span>
+        <span class="value" id="t2">0.00</span>s
+      </div>
+    </div>
+
+    <div style="margin-top:20px">
+      <div class="coord-line">
+        <span class="label">投放点坐标</span>
+        <span class="value" id="rx">0</span>, <span class="value" id="ry">0</span>, <span class="value" id="rz">0</span>
+      </div>
+      <div class="coord-line">
+        <span class="label">起爆点坐标</span>
+        <span class="value" id="ex">0</span>, <span class="value" id="ey">0</span>, <span class="value" id="ez">0</span>
+      </div>
+    </div>
+
+    <div class="cover-main">
+      <div class="cover-text">有效遮蔽时长：<span id="cover-main">0.00</span> 秒</div>
+    </div>
+  </div>
+
+  <div class="history">
+    <div class="htitle">策略历史记录（仅本人可见）</div>
+    <div class="hlist" id="hlist"></div>
+    <button class="clear" onclick="clearHistory()">清空本人记录</button>
+  </div>
+</div>
+
+<!-- 引入 JS 文件 -->
+<script src="script.js"></script>
+</body>
+</html>
