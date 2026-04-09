@@ -1,5 +1,4 @@
 // @charset "UTF-8";
-/* 强制 UTF-8 编码，彻底解决中文乱码 */
 // ==========================
 // 用户体系（账号隔离）
 // ==========================
@@ -46,16 +45,16 @@ function userReg() {
   let u = document.getElementById("reg_user").value.trim();
   let p = document.getElementById("reg_pwd").value.trim();
   if (!u || !p) {
-    document.getElementById("reg_msg").innerText = "请输入用户名和密码";
+    document.getElementById("reg_msg").innerText = "\u8BF7\u8F93\u5165\u7528\u6237\u540D\u548C\u5BC6\u7801";
     return;
   }
   if (users.some((x) => x.user == u)) {
-    document.getElementById("reg_msg").innerText = "用户名已存在";
+    document.getElementById("reg_msg").innerText = "\u7528\u6237\u540D\u5DF2\u5B58\u5728";
     return;
   }
   users.push({ user: u, pwd: p });
   localStorage.setItem("smoke_users", JSON.stringify(users));
-  document.getElementById("reg_msg").innerText = "注册成功，请登录";
+  document.getElementById("reg_msg").innerText = "\u6CE8\u518C\u6210\u529F\uFF0C\u8BF7\u767B\u5F55";
 }
 
 // 登录
@@ -64,7 +63,7 @@ function userLogin() {
   let p = document.getElementById("login_pwd").value.trim();
   let ok = users.some((x) => x.user == u && x.pwd == p);
   if (!ok) {
-    document.getElementById("login_msg").innerText = "用户名或密码错误";
+    document.getElementById("login_msg").innerText = "\u7528\u6237\u540D\u6216\u5BC6\u7801\u9519\u8BEF";
     return;
   }
   localStorage.setItem("smoke_login_user", u);
@@ -172,8 +171,8 @@ function renderHistory() {
     div.className = "hitem";
     div.innerHTML = `
       ${h.time}<br>
-      角度:${h.angle.toFixed(2)}° 速度:${h.speed.toFixed(2)}m/s<br>
-      遮蔽:<span>${h.cover.toFixed(2)}s</span>
+      \u89D2\u5EA6:${h.angle.toFixed(2)}° \u901F\u5EA6:${h.speed.toFixed(2)}m/s<br>
+      \u906E\u853D:<span>${h.cover.toFixed(2)}s</span>
     `;
     el.appendChild(div);
   });
